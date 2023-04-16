@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat Supporter</title>
+    <style>
+      /* スタイルを追加 */
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      /* フォーム全体のスタイル */
+      form {
+        flex-direction: column;
+        align-items: flex-end;
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 16px;
+      }
+      /* 質問ラベルのスタイル */
+      label[for="message"] {
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: bold;
+      }
+      input {
+        margin-top: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 16px;
+        width: calc(100% - 50px);
+        max-width: 400px;
+        float: center;
+        width: 70%;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        font-size: 16px;
+        color: #333;
+        transition: box-shadow 0.2s ease;
+      }
+      /* テキスト入力欄のフォーカス時のスタイル */
+      input[type=text]:focus {
+        outline: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      /* ラベルのスタイル */
+      label {
+        display: inline-block;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007acc;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .copy-button {
+        margin-left: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        background-color: #eee;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .copy-button:hover {
+        background-color: #ddd;
+        opacity: 1.0;
+      }
+      /* メッセージ表示欄のスタイル */
+      #output {
+        margin-top: 20px;
+        padding: 12px 20px;
+        border-radius: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        font-size: 16px;
+        color: #333;
+        min-height: 50px;
+        display: none;
+      }
+        /* Copy popup style */
+        .copy-popup {
+        top: -25px;
+        left: calc(50% - 50px);
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+        background-color: #4CAF50;
+        border-radius: 5px;
+        z-index: 1;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $(".copy-button").click(function() {
+          var text = $(this).parent().find("input").val();
+          navigator.clipboard.writeText(text);
+          $(this).find("img").attr("src", "checkmark.png");
+          $(this).attr("title", "コピーしました!");
+          $(this).parent().addClass("copied");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>ChatGPT for Google</h1>
+<form>
+  <div class="form-row">
+    <label for="you">あなた:</label>
+    <div class="form-field">
+      <input type="text" id="your-message" name="your-message">
+      <button type="button" class="copy-button" title="コピーボタン"><img src="copy.png" alt="Copy" width="16" height="16"></button>
+    </div>
+  </div><br>
+  <div class="form-row">
+    <label for="chatgpt">ChatGPT:</label>
+    <div class="form-field">
+      <input type="text" id="chatgpt-message" name="chatgpt-message">
+      <button type="button" class="copy-button" title="コピーアイコン"><img src="copy.png" alt="コピーアイコン" width="16" height="16"></button>
+    </div>
+  </div>
+</form>
+      <button type="submit">Submit</button>
+      <div id="output"></div>
+    <script src="index.js"></script>
+    <script>
+        // 「class」が「copy-button」のボタンがクリックされたら実行される関数を定義する
+        document.querySelectorAll('.copy-button').forEach(button => {
+        button.addEventListener('click', () => {
+        // 対応する入力フィールドの値を取得する
+        const input = button.parentNode.querySelector('input');
+        const textToCopy = input.value;
+  
+        // コピーするための一時的なtextarea要素を作成する
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+    
+        // コピー操作を実行する
+        textarea.select();
+        document.execCommand('copy');
+    
+        // 一時的なtextarea要素を削除する
+        document.body.removeChild(textarea);
+        });
+    });
+    </script>
+    <script src="deliver_chatGPT"></script>
+  </body>
+</html>
